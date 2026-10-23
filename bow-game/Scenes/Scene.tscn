@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dg2u2kmaxgtjt"]
+
+[ext_resource type="PackedScene" uid="uid://cvwgasmqdw5lg" path="res://Scenes/Floor.tscn" id="1_jp0d8"]
+[ext_resource type="Script" uid="uid://csjxsha1fbedu" path="res://Scenes/character_body_3d.gd" id="2_s3lxa"]
+[ext_resource type="Material" uid="uid://cc64y0ioxas4t" path="res://Materials/Skybox.tres" id="3_1o454"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oiqhs"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oiqhs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1o454"]
+
+[sub_resource type="Sky" id="Sky_lmru3"]
+sky_material = ExtResource("3_1o454")
+
+[sub_resource type="Environment" id="Environment_oiqhs"]
+background_mode = 2
+sky = SubResource("Sky_lmru3")
+ambient_light_source = 3
+
+[node name="Scene" type="Node3D" unique_id=1716934834]
+
+[node name="Node3D" parent="." unique_id=1185789753 instance=ExtResource("1_jp0d8")]
+transform = Transform3D(20, 0, 0, 0, 0.4, 0, 0, 0, 20, 0, 0, 0)
+
+[node name="Node3D2" parent="." unique_id=291966394 instance=ExtResource("1_jp0d8")]
+transform = Transform3D(9.9308195, 0.02139462, 0.48426208, -0.025625806, 0.086410165, -9.0184555, -1.1739581, 0.17909649, 4.2933598, -3.6707308, 3.073347, -4.4325285)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1694728925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4717598, 0)
+script = ExtResource("2_s3lxa")
+mouse_sensitivity = 0.001
+startAimTime = 0.05
+endAimTime = 0.05
+fov = 90.0
+aimFov = 45.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1377007658]
+shape = SubResource("CapsuleShape3D_oiqhs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=542000305]
+mesh = SubResource("CapsuleMesh_oiqhs")
+
+[node name="CameraPivot" type="Node3D" parent="CharacterBody3D" unique_id=459527634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 1, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CharacterBody3D/CameraPivot" unique_id=370012268]
+shape = SubResource("BoxShape3D_1o454")
+spring_length = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CameraPivot/SpringArm3D" unique_id=1254100642]
+transform = Transform3D(1, 0, 0, 0, 0.98592734, 0.1671744, 0, -0.1671744, 0.98592734, 0, 0, 0)
+fov = 90.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=764890848]
+transform = Transform3D(1, 0, 0, 0, 0.88736695, 0.46106383, 0, -0.46106383, 0.88736695, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=108781388]
+environment = SubResource("Environment_oiqhs")
